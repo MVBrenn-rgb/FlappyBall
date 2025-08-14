@@ -1,0 +1,64 @@
+/* Basic reset */
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+
+/* App look */
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #fff;
+  background: #004C54;            /* Eagles green behind the canvas */
+  overflow: hidden;                /* Prevent page scroll during play */
+}
+
+/* Fullscreen canvas with chunky pixels */
+#gameCanvas {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  image-rendering: pixelated;      /* 2-D pixel vibe */
+  background: #004C54;             /* Canvas fallback color */
+}
+
+/* Shared overlay panels (menu, game over, credits) */
+#startMenu,
+#gameOver,
+#credits {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.35); /* dim backdrop over the field */
+}
+
+/* Hide utility */
+.hidden { display: none; }
+
+/* Titles */
+#startMenu h1,
+#gameOver h2,
+#credits h2 {
+  margin: 0 0 12px;
+  font-size: clamp(28px, 7vw, 54px);
+}
+
+/* Buttons */
+button {
+  appearance: none;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  margin: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#startBtn, #restartBtn { background: #17b978; color: #082b2a; }
+#homeBtn { background: #eaeaea; color: #222; }
+#shopBtn { background: #9ad4d6; color: #063; }  /* Phase 2 feature (placeholder) */
+#creditsBtn, #backFromCredits { background: #c9c9c9; color: #222; }
+
+/* Final score text */
+#finalScore { font-weight: 700; font-size: clamp(18px, 5vw, 28px); }
