@@ -2,97 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flappy Ball Football</title>
-  <style>
-    body {
-      margin: 0;
-      background: #222;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-    }
-
-    canvas {
-      image-rendering: pixelated;
-      background: #4CAF50;
-      display: block;
-    }
-
-    .overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      background: rgba(0,0,0,0.7);
-      color: white;
-      z-index: 10;
-    }
-
-    .hidden { display: none; }
-
-    button {
-      margin: 10px;
-      padding: 10px 20px;
-      font-size: 20px;
-      cursor: pointer;
-      border-radius: 8px;
-      border: none;
-      background: #ff5722;
-      color: white;
-    }
-
-    #scoreboard {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 24px;
-      color: white;
-      font-weight: bold;
-      z-index: 5;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Start Screen -->
-  <div id="startScreen" class="overlay">
+  <!-- Start Menu -->
+  <div id="startScreen" class="screen">
     <h1>Flappy Ball Football</h1>
-    <button id="startBtn">Start</button>
-    <button id="shopBtn">Shop</button>
-    <button id="creditsBtn">Credits</button>
+    <button onclick="startGame()">Start</button>
+    <button onclick="showCredits()">Credits</button>
   </div>
 
-  <!-- Shop Screen -->
-  <div id="shopScreen" class="overlay hidden">
-    <h1>Shop</h1>
-    <p>Coming in Phase 2...</p>
-    <button id="backFromShop">Back</button>
-  </div>
-
-  <!-- Credits Screen -->
-  <div id="creditsScreen" class="overlay hidden">
-    <h1>Credits</h1>
+  <!-- Credits -->
+  <div id="creditsScreen" class="screen hidden">
+    <h2>Credits</h2>
     <p>By Matthew Brennan and COCOA beanie</p>
-    <button id="backFromCredits">Back</button>
+    <button onclick="goHome()">Back</button>
   </div>
 
-  <!-- Game Over Screen -->
-  <div id="gameOverScreen" class="overlay hidden">
-    <h1>Imagine dying</h1>
+  <!-- Game Canvas -->
+  <canvas id="gameCanvas" class="hidden"></canvas>
+
+  <!-- Game Over -->
+  <div id="gameOverScreen" class="screen hidden">
+    <h2>Imagine dying</h2>
     <p id="finalScore"></p>
-    <button id="restartBtn">Restart</button>
-    <button id="homeBtn">Home</button>
+    <button onclick="restartGame()">Restart</button>
+    <button onclick="goHome()">Home</button>
   </div>
 
-  <!-- Scoreboard -->
-  <div id="scoreboard" class="hidden">0</div>
-
-  <canvas id="gameCanvas"></canvas>
   <script src="script.js"></script>
 </body>
 </html>
