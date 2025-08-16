@@ -1,38 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flappy Ball</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Flappy Ball Football</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Start Menu -->
-  <div id="startMenu">
-    <h1>Flappy Ball</h1>
-    <button id="startBtn">Start</button>
-    <button id="shopBtn">Shop</button>
-    <button id="creditsBtn">Credits</button>
-  </div>
+    <!-- Start Screen -->
+    <div id="startScreen" class="overlay">
+        <h1>Flappy Ball Football</h1>
+        <button onclick="startGame()">Start</button>
+        <button onclick="openCredits()">Credits</button>
+    </div>
 
-  <!-- Credits Screen -->
-  <div id="credits" class="hidden">
-    <h2>Credits</h2>
-    <p>By Matthew Brennan and COCOA beanie</p>
-    <button id="backFromCredits">Back</button>
-  </div>
+    <!-- Credits Screen -->
+    <div id="creditsScreen" class="overlay" style="display:none;">
+        <p>by Matthew Brennan and COCOA beanie</p>
+        <button onclick="closeCredits()">Back</button>
+    </div>
 
-  <!-- Game Area -->
-  <canvas id="gameCanvas" width="320" height="480" class="hidden"></canvas>
+    <!-- Game Canvas -->
+    <canvas id="gameCanvas" width="320" height="480" style="display:none;"></canvas>
 
-  <!-- Game Over Screen -->
-  <div id="gameOver" class="hidden">
-    <h2>Imagine dying</h2>
-    <p id="finalScore">Score: 0</p>
-    <button id="restartBtn">Restart</button>
-    <button id="homeBtn">Home</button>
-  </div>
+    <!-- Game Over Screen -->
+    <div id="gameOverScreen" class="overlay" style="display:none;">
+        <h2>Imagine dying</h2>
+        <p>Score: <span id="finalScore">0</span></p>
+        <button onclick="restartGame()">Restart</button>
+        <button onclick="goHome()">Home</button>
+    </div>
 
-  <script src="game.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
