@@ -17,7 +17,7 @@
 
     canvas {
       image-rendering: pixelated;
-      background: url("field.png") repeat-y;
+      background: #4CAF50;
       display: block;
     }
 
@@ -28,7 +28,7 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.7);
       color: white;
       z-index: 10;
     }
@@ -42,7 +42,7 @@
       cursor: pointer;
       border-radius: 8px;
       border: none;
-      background: #4CAF50;
+      background: #ff5722;
       color: white;
     }
 
@@ -59,6 +59,7 @@
   </style>
 </head>
 <body>
+  <!-- Start Screen -->
   <div id="startScreen" class="overlay">
     <h1>Flappy Ball Football</h1>
     <button id="startBtn">Start</button>
@@ -66,18 +67,21 @@
     <button id="creditsBtn">Credits</button>
   </div>
 
+  <!-- Shop Screen -->
   <div id="shopScreen" class="overlay hidden">
     <h1>Shop</h1>
-    <p>Coins: <span id="coinCount">0</span></p>
+    <p>Coming in Phase 2...</p>
     <button id="backFromShop">Back</button>
   </div>
 
+  <!-- Credits Screen -->
   <div id="creditsScreen" class="overlay hidden">
     <h1>Credits</h1>
     <p>By Matthew Brennan and COCOA beanie</p>
     <button id="backFromCredits">Back</button>
   </div>
 
+  <!-- Game Over Screen -->
   <div id="gameOverScreen" class="overlay hidden">
     <h1>Imagine dying</h1>
     <p id="finalScore"></p>
@@ -85,9 +89,10 @@
     <button id="homeBtn">Home</button>
   </div>
 
+  <!-- Scoreboard -->
   <div id="scoreboard" class="hidden">0</div>
-  <canvas id="gameCanvas"></canvas>
 
+  <canvas id="gameCanvas"></canvas>
   <script src="script.js"></script>
 </body>
 </html>
