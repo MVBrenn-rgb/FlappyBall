@@ -1,43 +1,32 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #87CEEB;
-    text-align: center;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #222;
+  color: white;
+  text-align: center;
 }
 
-canvas {
-    border: 2px solid black;
-    display: block;
-    margin: auto;
-    background: url('field_background.png') repeat-y;
+.screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.hidden {
+  display: none;
 }
 
 button {
-    padding: 10px 20px;
-    margin: 5px;
-    font-size: 16px;
-    cursor: pointer;
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-.shopItem {
-    display: inline-block;
-    margin: 10px;
-    padding: 10px;
-    border: 2px solid #333;
-    background: #fff;
-    color: black;
+#gameCanvas {
+  display: block;
+  background: url('field.png') repeat;
+  margin: 0 auto;
+  border: 2px solid white;
 }
