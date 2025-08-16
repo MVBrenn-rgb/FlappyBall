@@ -1,4 +1,3 @@
-// === Game Variables ===
 let canvas = document.getElementById("gameCanvas");
 let ctx = canvas.getContext("2d");
 
@@ -19,18 +18,31 @@ let defenderSpeed = 2;
 let gameRunning = false;
 let gameLoop;
 
-// Load shop state
 if (localStorage.getItem("shopItems")) {
     shopItems = JSON.parse(localStorage.getItem("shopItems"));
 }
 updateCoinDisplay();
 
+// === Button Events (Click + Touch) ===
+document.getElementById("startBtn").addEventListener("click", startGame);
+document.getElementById("shopBtn").addEventListener("click", openShop);
+document.getElementById("creditsBtn").addEventListener("click", openCredits);
+document.getElementById("backFromShopBtn").addEventListener("click", closeShop);
+document.getElementById("backFromCreditsBtn").addEventListener("click", closeCredits);
+document.getElementById("restartBtn").addEventListener("click", restartGame);
+document.getElementById("homeBtn").addEventListener("click", goHome);
+
+document.getElementById("startBtn").addEventListener("touchstart", e => { e.preventDefault(); startGame(); });
+document.getElementById("shopBtn").addEventListener("touchstart", e => { e.preventDefault(); openShop(); });
+document.getElementById("creditsBtn").addEventListener("touchstart", e => { e.preventDefault(); openCredits(); });
+document.getElementById("backFromShopBtn").addEventListener("touchstart", e => { e.preventDefault(); closeShop(); });
+document.getElementById("backFromCreditsBtn").addEventListener("touchstart", e => { e.preventDefault(); closeCredits(); });
+document.getElementById("restartBtn").addEventListener("touchstart", e => { e.preventDefault(); restartGame(); });
+document.getElementById("homeBtn").addEventListener("touchstart", e => { e.preventDefault(); goHome(); });
+
 // === Menu Functions ===
 function startGame() {
-    document.getElementById("startScreen").style.display = "none";
-    document.getElementById("gameOverScreen").style.display = "none";
-    document.getElementById("shopScreen").style.display = "none";
-    document.getElementById("creditsScreen").style.display = "none";
+    hideAllScreens();
     canvas.style.display = "block";
     resetGame();
     gameRunning = true;
@@ -38,30 +50,34 @@ function startGame() {
 }
 
 function goHome() {
-    document.getElementById("gameOverScreen").style.display = "none";
+    hideAllScreens();
     document.getElementById("startScreen").style.display = "flex";
-    canvas.style.display = "none";
 }
 
 function openCredits() {
-    document.getElementById("startScreen").style.display = "none";
+    hideAllScreens();
     document.getElementById("creditsScreen").style.display = "flex";
 }
 
 function closeCredits() {
-    document.getElementById("creditsScreen").style.display = "none";
+    hideAllScreens();
     document.getElementById("startScreen").style.display = "flex";
 }
 
 function openShop() {
-    document.getElementById("startScreen").style.display = "none";
+    hideAllScreens();
     document.getElementById("shopScreen").style.display = "flex";
     renderShop();
 }
 
 function closeShop() {
-    document.getElementById("shopScreen").style.display = "none";
+    hideAllScreens();
     document.getElementById("startScreen").style.display = "flex";
+}
+
+function hideAllScreens() {
+    document.querySelectorAll(".overlay").forEach(el => el.style.display = "none");
+    canvas.style.display = "none";
 }
 
 function renderShop() {
@@ -107,7 +123,7 @@ function updateCoinDisplay() {
     document.getElementById("coinCount").textContent = coins;
 }
 
-// === Game Mechanics ===
+// === Game Logic ===
 function resetGame() {
     ball.y = 150;
     ball.velocity = 0;
@@ -144,15 +160,10 @@ function updateGame() {
         let d = defenders[i];
         d.x -= defenderSpeed;
 
-        // Top defender
         ctx.fillStyle = "green";
         ctx.fillRect(d.x, 0, defenderWidth, d.y);
-
-        // Bottom defender
-        ctx.fillStyle = "green";
         ctx.fillRect(d.x, d.y + defenderGap, defenderWidth, canvas.height - (d.y + defenderGap));
 
-        // Collision check
         if (ball.x + ball.radius > d.x && ball.x - ball.radius < d.x + defenderWidth) {
             if (ball.y - ball.radius < d.y || ball.y + ball.radius > d.y + defenderGap) {
                 endGame();
@@ -160,24 +171,20 @@ function updateGame() {
             }
         }
 
-        // Passed defender
         if (d.x + defenderWidth < ball.x && !d.passed) {
             score++;
             d.passed = true;
         }
     }
 
-    // Remove off-screen defenders
     if (defenders.length && defenders[0].x + defenderWidth < 0) {
         defenders.shift();
     }
 
-    // Add new defenders
     if (defenders.length < 2) {
         spawnDefender();
     }
 
-    // Draw score
     ctx.fillStyle = "white";
     ctx.font = "20px Arial";
     ctx.fillText("Score: " + score, 10, 20);
@@ -191,7 +198,7 @@ function endGame() {
     saveShop();
     document.getElementById("finalScore").textContent = score;
     document.getElementById("coinsEarned").textContent = earned;
-    canvas.style.display = "none";
+    hideAllScreens();
     document.getElementById("gameOverScreen").style.display = "flex";
 }
 
@@ -199,10 +206,14 @@ function restartGame() {
     startGame();
 }
 
-// Controls
+// Controls for desktop + mobile
 document.addEventListener("keydown", () => {
     if (gameRunning) ball.velocity = ball.lift;
 });
 document.addEventListener("mousedown", () => {
+    if (gameRunning) ball.velocity = ball.lift;
+});
+document.addEventListener("touchstart", e => {
+    e.preventDefault();
     if (gameRunning) ball.velocity = ball.lift;
 });
