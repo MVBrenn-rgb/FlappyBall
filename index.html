@@ -9,9 +9,9 @@
     <!-- Start Screen -->
     <div id="startScreen" class="overlay">
         <h1>Flappy Ball Football</h1>
-        <button onclick="startGame()">Start</button>
-        <button onclick="openShop()">Shop</button>
-        <button onclick="openCredits()">Credits</button>
+        <button id="startBtn">Start</button>
+        <button id="shopBtn">Shop</button>
+        <button id="creditsBtn">Credits</button>
     </div>
 
     <!-- Shop Screen -->
@@ -19,13 +19,13 @@
         <h2>Shop</h2>
         <p>Coins: <span id="coinCount">0</span></p>
         <div id="shopItems"></div>
-        <button onclick="closeShop()">Back</button>
+        <button id="backFromShopBtn">Back</button>
     </div>
 
     <!-- Credits Screen -->
     <div id="creditsScreen" class="overlay" style="display:none;">
         <p>by Matthew Brennan and COCOA beanie</p>
-        <button onclick="closeCredits()">Back</button>
+        <button id="backFromCreditsBtn">Back</button>
     </div>
 
     <!-- Game Canvas -->
@@ -36,8 +36,8 @@
         <h2>Imagine dying</h2>
         <p>Score: <span id="finalScore">0</span></p>
         <p>+<span id="coinsEarned">0</span> coins</p>
-        <button onclick="restartGame()">Restart</button>
-        <button onclick="goHome()">Home</button>
+        <button id="restartBtn">Restart</button>
+        <button id="homeBtn">Home</button>
     </div>
 
     <script src="script.js"></script>
