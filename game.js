@@ -1,7 +1,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// scale canvas to fit screen but keep aspect ratio
+// Scale canvas for iPhone
 function resizeCanvas() {
   const scale = Math.min(window.innerWidth / 320, window.innerHeight / 480);
   canvas.width = 320;
@@ -12,13 +12,14 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
-// UI
+// Screens
 const startScreen = document.getElementById("startScreen");
 const shopScreen = document.getElementById("shopScreen");
 const creditsScreen = document.getElementById("creditsScreen");
 const gameOverScreen = document.getElementById("gameOverScreen");
 const scoreboard = document.getElementById("scoreboard");
 
+// Buttons
 document.getElementById("startBtn").onclick = startGame;
 document.getElementById("shopBtn").onclick = () => switchScreen(shopScreen);
 document.getElementById("creditsBtn").onclick = () => switchScreen(creditsScreen);
@@ -30,52 +31,50 @@ document.getElementById("homeBtn").onclick = () => switchScreen(startScreen);
 function switchScreen(screen) {
   [startScreen, shopScreen, creditsScreen, gameOverScreen].forEach(s => s.classList.add("hidden"));
   scoreboard.classList.add("hidden");
-  screen.classList.remove("hidden");
+  if (screen) screen.classList.remove("hidden");
 }
 
-// Game variables
-let ball, gravity, velocity, obstacles, score, gameRunning, loop;
+// Game vars
+let ball, gravity, velocity, score, running, loop;
 
 function resetGame() {
-  ball = { x: 50, y: 200, r: 10 };
+  ball = { x: 50, y: 200, r: 12 };
   gravity = 0.5;
   velocity = 0;
-  obstacles = [];
   score = 0;
 }
 
 function startGame() {
   resetGame();
-  switchScreen(null); // hide all
+  switchScreen(null); // hide all screens
   scoreboard.classList.remove("hidden");
-  gameRunning = true;
+  running = true;
   loop = requestAnimationFrame(update);
 }
 
 function endGame() {
-  gameRunning = false;
+  running = false;
   cancelAnimationFrame(loop);
   document.getElementById("finalScore").innerText = "Score: " + score;
   switchScreen(gameOverScreen);
 }
 
 // Controls
+function flap() {
+  if (running) velocity = -7;
+}
 canvas.addEventListener("mousedown", flap);
 canvas.addEventListener("touchstart", flap);
 
-function flap(e) {
-  if (gameRunning) {
-    velocity = -7;
-  }
-}
-
 // Game loop
 function update() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  // physics
   velocity += gravity;
   ball.y += velocity;
 
+  // boundaries
   if (ball.y + ball.r > canvas.height || ball.y - ball.r < 0) {
     endGame();
     return;
@@ -84,10 +83,12 @@ function update() {
   // draw ball
   ctx.fillStyle = "brown";
   ctx.beginPath();
-  ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI*2);
+  ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
   ctx.fill();
 
-  document.getElementById("scoreboard").innerText = score;
+  // score
+  score++;
+  scoreboard.innerText = score;
 
-  loop = requestAnimationFrame(update);
+  if (running) loop = requestAnimationFrame(update);
 }
